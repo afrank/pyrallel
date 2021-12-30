@@ -7,6 +7,7 @@ import queue
 import time
 import paramiko
 import sys
+import datetime
 
 class HostThread(threading.Thread):
     def __init__(self, hostname, q, shutdown, cmd="echo", interval=30, proxy=None):
@@ -28,7 +29,8 @@ class HostThread(threading.Thread):
                 time.sleep(1)
             stdout, stderr = self.host.cmd(self.cmd)
             #obj = json.loads(stdout)
-            self.q.put( (stdout,stderr) )
+            ts = datetime.datetime.now()
+            self.q.put( (self.host, ts, stdout, stderr) )
 
         self.host.disconnect()
 
