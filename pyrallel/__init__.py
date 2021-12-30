@@ -30,7 +30,7 @@ class HostThread(threading.Thread):
             stdout, stderr = self.host.cmd(self.cmd)
             #obj = json.loads(stdout)
             ts = datetime.datetime.now()
-            self.q.put( (self.host, ts, stdout, stderr) )
+            self.q.put( (self.hostname, ts, stdout, stderr) )
 
         self.host.disconnect()
 
